@@ -40,6 +40,14 @@ class RDAP_API {
 	}
 
 	function query( $domain ) {
+		if ( $this->use_cache ) {
+			$response = $this->cache->get( $domain, 'domain_query' );
+			if ( $response ) {
+				header( 'X-FNF-From-Cache: 1' );
+				return $response;
+			}
+		}
+
 		list( $name, $tld ) = explode( '.', $domain, 2 );
 
 		$server = $this->find_rdap( $tld );
@@ -56,8 +64,6 @@ class RDAP_API {
 				if ( $links ) {
 					$rel_link = reset( $links ); // First element;
 
-					//echo $url . '<=>' . $rel_link['href'];
-					
 					// If the strings are different, case insensitive check.
 					if ( 0 !== strcasecmp( $rel_link['href'], $url ) ) {
 						$rel_response = $this->query_url( $rel_link['href'] );
@@ -69,6 +75,7 @@ class RDAP_API {
 			}
 
 			if ( $response ) {
+				$this->cache->set( $domain, $response, 'domain_query' );
 				return $response;
 			}
 

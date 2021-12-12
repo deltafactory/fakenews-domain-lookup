@@ -5,7 +5,7 @@ class WHOIS_API {
 	var $WHOIS = 'timeout 15s /usr/bin/whois -H -- %s';
 	var $response = array();
 	var $lookup = 0;
-	var $ignore_keys = array( 'notice', 'terms_of_use' );
+//	var $ignore_keys = array( 'notice', 'terms_of_use' );
 
 	var $use_cache = true;
 

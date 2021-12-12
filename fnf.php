@@ -9,7 +9,6 @@
 
 class FakeNewsFitness {
 
-
 	static function filter_rdap( $data, $domain ) {
 		$result = array(
 			'status' => 'ok',
@@ -93,7 +92,6 @@ class FakeNewsFitness {
 
 	static function filter_whois( $data, $domain ) {
 		// Result contains multiple entries. Just show the last.
-		print_r( $data ); exit();
 		$record = is_array( $data ) ? end( $data ) : $data;
 
 		$result = array(
@@ -102,8 +100,6 @@ class FakeNewsFitness {
 			'domain' => $domain
 		);
 
-//		$result = array_merge( $result, $record );
-//		return $result;
 
 		$registrant = self::compile_contact_fields( $record, 'registrant' );
 		if ( $registrant ) {
@@ -114,10 +110,14 @@ class FakeNewsFitness {
 			}
 		}
 
-		$reg_date = isset( $data['creation_date'] ) ? $data['creation_date'] : false;
+		$reg_date = isset( $record['creation_date'] ) ? $record['creation_date'] : false;
 
 		if ( $reg_date ) {
 			$result['registration_date'] = self::format_reg_date( $reg_date );
+		}
+
+		if ( !empty( $record['name_server'] ) ) {
+			$result['nameservers'] = $record['name_server'];
 		}
 
 		return $result;
@@ -129,7 +129,7 @@ class FakeNewsFitness {
 		$contact = array();
 
 		foreach( $fields as $f ) {
-			$key = "$type_$f";
+			$key = $type . '_' . $f;
 			if ( isset( $data[$key] ) ) {
 				$contact[$f] = $data[$key];
 			}

@@ -5,6 +5,13 @@ function get_param( $key, $default = '' ) {
 }
 
 function json_response( $response, $http_status = 200 ) {
+
+	// CORS header
+	header( 'Access-Control-Allow-Origin: *' );
+
+	// No-cache header.
+	header( 'Cache-Control: no-cache' );
+
 	http_response_code( $http_status );
 	header( 'Content-type: application/json' );
 	echo json_encode( $response );

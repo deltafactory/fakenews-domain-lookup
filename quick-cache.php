@@ -72,6 +72,6 @@ class Quick_Cache {
 			$expiration = $this->expiration;
 		}
 
-		return ( is_readable( $path ) && ( (int) filemtime( $path ) + (int) $expiration ) < time() );
+		return ( is_readable( $path ) && ( (int) filemtime( $path ) + (int) $expiration ) > time() );
 	}
 }

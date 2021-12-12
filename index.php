@@ -26,6 +26,9 @@ $use = get_param( 'use', 'both' );
 $nocache = (bool) get_param( 'nocache', false );
 $raw = WHOIS_DEBUG ? get_param( 'raw', false ) : false;
 
+// Determine by config constant and per-request option.
+$use_cache = USE_CACHE && !$nocache;
+
 if ( !$domain ) {
 	$result = array(
 		'status' => 'error',
@@ -42,14 +45,14 @@ $cache = new Quick_Cache( $cache_storage );
 
 if ( $use == 'rdap' || $use == 'both' ) {
 	$rdap = new RDAP_API( $cache );
-	$rdap->use_cache = !$nocache;
+	$rdap->use_cache = $use_cache;
 	$result = $rdap->query( $domain );
 	$output = FakeNewsFitness::filter_rdap( $result, $domain );
 }
 
 if ( ( $use == 'both' && !$result ) || $use == 'whois' ) {
 	$whois = new WHOIS_API();
-	$whois->use_cache = !$nocache;
+	$whois->use_cache = $use_cache;
 	$result = $whois->query( $domain );
 	$output = FakeNewsFitness::filter_whois( $result, $domain );
 }
