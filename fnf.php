@@ -23,7 +23,7 @@ class FakeNewsFitness {
 			$format_registrant = self::entity_to_object( $registrant );
 
 			if ( $format_registrant ) {
-				$result['registrant'] = $format_registrant;
+				$result['registrant'] = array_values( $format_registrant );
 			}
 		}
 
@@ -107,7 +107,7 @@ class FakeNewsFitness {
 			$format_registrant = self::format_whois_contact( $registrant );
 
 			if ( $format_registrant ) {
-				$result['registrant'] = $format_registrant;
+				$result['registrant'] = array_values( $format_registrant );
 			}
 		}
 
