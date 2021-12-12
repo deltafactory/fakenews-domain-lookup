@@ -125,7 +125,9 @@ class RDAP_API {
 
 		if ( !empty( $record['entities'] ) ) {
 			foreach( $record['entities'] as $ent ) {
-				if ( is_array( $ent['roles'] ) && in_array( $role, $ent['roles'] ) ) {
+				$lower_role = strtolower( $role );
+				$lower_roles = array_map( 'strtolower', $ent['roles'] );
+				if ( is_array( $ent['roles'] ) && in_array( $lower_role, $lower_roles ) ) {
 					$contact = $ent;
 					break;
 				}

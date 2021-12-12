@@ -17,7 +17,6 @@ class FakeNewsFitness {
 		);
 
 		$registrant = RDAP_API::find_entity_by_role( $data, 'registrant' );
-
 		if ( $registrant ) {
 
 			// Object may be blank if private/redacted.
@@ -57,7 +56,9 @@ class FakeNewsFitness {
 					case 'org':
 						if ( false !== stripos( $c[3], 'privacy' ) ) {
 							// Is private. Bail.
-							return $contact = array();
+							$contact = array( 'note' => 'Privacy Protected' );
+							return $contact;
+//							break 2;
 						}
 
 						/* falls through */
@@ -142,7 +143,7 @@ class FakeNewsFitness {
 		// Bail if org includes "Privacy" - this is not foolproof!
 		if ( isset( $contact['organization'] ) ) {
 			if ( false !== stripos( $contact['organization'], 'privacy' ) ) {
-				return array();
+				return array('note' => 'Privacy Protected' );
 			}
 		}
 
