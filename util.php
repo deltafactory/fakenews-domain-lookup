@@ -31,9 +31,11 @@ function parse_domain( $query ) {
 		$domain = $query;
 	}
 
-	$match_domain = "/^[\w\-\.]{2,}$/";
+	$match_domain = "/(\w+\.\w+)$/";
 
-	if ( ! preg_match( $match_domain, $domain ) ) {
+	if ( preg_match( $match_domain, $domain, $matches) ) {
+		$domain = $matches[1];
+	} else {
 		$domain = false;
 	}
 
