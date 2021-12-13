@@ -53,6 +53,7 @@ class FakeNewsFitness {
 				switch( $c[0] ) {
 					// Ignore version
 					case 'version': break;
+					case 'kind': break;
 					case 'org':
 						if ( false !== stripos( $c[3], 'privacy' ) ) {
 							// Is private. Bail.
