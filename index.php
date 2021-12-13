@@ -57,6 +57,13 @@ if ( ( $use == 'both' && !$result ) || $use == 'whois' ) {
 	$output = FakeNewsFitness::filter_whois( $result, $domain );
 }
 
+if ( !$output ) {
+	$output = array(
+		'status' => 'error',
+		'error' => 'Not found.'
+	);
+}
+
 if ( $raw ) {
 	json_response( $result );
 } else {

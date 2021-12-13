@@ -31,7 +31,7 @@ function parse_domain( $query ) {
 		$domain = $query;
 	}
 
-	$match_domain = "/(\w+\.\w+)$/";
+	$match_domain = "/([-\w]+\.\w+)$/";
 
 	if ( preg_match( $match_domain, $domain, $matches) ) {
 		$domain = $matches[1];

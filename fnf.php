@@ -10,6 +10,10 @@
 class FakeNewsFitness {
 
 	static function filter_rdap( $data, $domain ) {
+		if ( !$data ) {
+			return false;
+		}
+
 		$result = array(
 			'status' => 'ok',
 			'via' => 'rdap',
@@ -95,6 +99,11 @@ class FakeNewsFitness {
 	static function filter_whois( $data, $domain ) {
 		// Result contains multiple entries. Just show the last.
 		$record = is_array( $data ) ? end( $data ) : $data;
+
+		if ( !isset( $record['domain_name'] ) ) {
+			$result = false;
+			return $result;
+		}
 
 		$result = array(
 			'status' => 'ok',
