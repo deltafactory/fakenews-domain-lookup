@@ -15,6 +15,7 @@ require( __DIR__ . '/whois-api.php' );
 require( __DIR__ . '/rdap-api.php' );
 require( __DIR__ . '/quick-cache.php' );
 require( __DIR__ . '/fnf.php' );
+require( __DIR__ . '/vendor/autoload.php' );
 
 // URL Parameters:
 //  - q: <domain to query> (required)

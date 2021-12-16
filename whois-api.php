@@ -1,5 +1,7 @@
 <?php
 
+use Iodev\Whois\Factory;
+
 class WHOIS_API {
 
 	var $WHOIS = 'timeout 15s /usr/bin/whois -H -- %s';
@@ -21,7 +23,10 @@ class WHOIS_API {
 		$result = false;
 
 		if ( $domain ) {
-			exec( sprintf( $this->WHOIS, escapeshellcmd( $domain ) ), $output);
+			$whois = Factory::get()->createWhois();
+			$result = $whois->lookupDomain( $domain );
+			$output = explode( "\n", $result->text );
+			//exec( sprintf( $this->WHOIS, escapeshellcmd( $domain ) ), $output);
 			$result = $this->parse_data( $output );
 		}
 
